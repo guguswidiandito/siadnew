@@ -21,9 +21,9 @@
                 </td>
             </tr>
             <tr>
-                <th>Username</th>
+                <th>Email</th>
                 <td>
-                    {!! Form::text('username', null, ['class'=>'form-control', 'placeholder' => 'Username' ]) !!}
+                    {!! Form::email('email', null, ['class'=>'form-control', 'placeholder' => 'Email' ]) !!}
                 </td>
             </tr>
             <tr>
@@ -35,15 +35,9 @@
             <tr>
                 <th width="200px">Angkatan</th>
                 <td>
-                    <select name="angkatan" class="form-control">
-                        <option selected="selected" disabled="disabled" hidden="hidden" value="">Pilih tahun angkatan</option>
-                        <?php
-                        for ($i=2010; $i<=date('Y'); $i++) {
-                            echo "<option value='".$i."'>".$i."</option>";
-                        }
-                        ?>
-                    </select>
-                </td>
+                      {!! Form::selectRange('angkatan', 2016, date('Y'), ['class' => 'form-control', 'placeholder' => 'Pilih Tahun Angkatan']) !!}
+                  </div>
+                  </td>
             </tr>
             <tr>
                 <th>Password</th>

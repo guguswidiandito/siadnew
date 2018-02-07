@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Registrasi extends Model
 {
-    protected $fillable = ['no_reg', 'user_id', 'jenis_pembayaran_id'];
+    protected $fillable = ['no_reg', 'user_id', 'jenis_pembayaran_id', 'tahun_ajaran'];
 
     public function users()
     {

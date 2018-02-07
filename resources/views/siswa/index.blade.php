@@ -4,19 +4,18 @@
     <div class="box-header with-border">
         <div class="col-md-10 text-left">
             {!! Form::open(['url' => '/siswa', 'method'=>'get', 'class'=>'form-inline']) !!}
-            {!! Form::select('kelas',[]+App\Kelas::lists('nama_kelas', 'id')->all(), null,  ['class'=>'form-control', 'placeholder'=>'Pilih kelas']) !!}
-            {!! Form::selectRange('angkatan', 2010, 2030, null, ['class'=>'form-control', 'placeholder'=>'Pilih tahun']) !!}
-            {!! Form::submit('Filter', ['class'=>'btn btn-flat bg-navy']) !!}
+            {!! Form::selectRange('angkatan', 2010, date('Y'), null, ['class'=>'form-control', 'placeholder'=>'Pilih tahun']) !!}
+            {!! Form::submit('Filter', ['class'=>'btn  bg-navy']) !!}
             <div class="input-group {!! $errors->has('q') ? 'has-error' : '' !!}">
                 {!! Form::text('q', isset($q) ? $q : null, ['class'=>'form-control', 'placeholder' => 'NIS']) !!}
                 <span class="input-group-btn">
-                    <button class="btn btn-flat bg-maroon" type="submit">Cari</button>
+                    <button class="btn  bg-maroon" type="submit">Cari</button>
                 </span>
             </div>
             {!! Form::close() !!}
         </div>
         <div class="col-md-2 text-right">
-            <a href="{{ url('siswa/create') }}" class="btn btn-flat bg-purple">Tambah Siswa</a>
+            <a href="{{ url('siswa/create') }}" class="btn  bg-purple">Tambah Siswa</a>
         </div>
     </div>
     <!-- /.box-header -->
@@ -28,7 +27,6 @@
                         <th class="text-center">No</th>
                         <th>NIS</th>
                         <th>Nama Siswa</th>
-                        <th>Kelas</th>
                         <th class="text-center">Jumlah Registrasi</th>
                         <th class="text-center">Tahun Angkatan</th>
                         <th class="text-center">Aksi</th>
@@ -43,7 +41,6 @@
                         <td class="text-center">{{ $no++ }}</td>
                         <td>{{ $s->no_identitas }}</td>
                         <td>{{ $s->name }}</td>
-                        <td>{{ $s->kelas->nama_kelas }}</td>
                         <td class="text-center">
                             @php
                             echo $s->registrasi()->count()." Registrasi";
@@ -52,9 +49,9 @@
                         <td class="text-center">{{ $s->angkatan }}</td>
                         <td class="text-center">
                             {!! Form::model($s, ['route' => ['siswa.destroy', $s->id], 'method' => 'delete', 'class'=>'form-inline'] ) !!}
-                            <a href="{{ route('siswa.show', $s->id) }}" class="btn btn-flat bg-olive">Registrasi</a>
-                            <a href="{{ route('siswa.edit', $s->id) }}" class="btn btn-flat bg-blue">Edit</a>
-                            <button type="submit" class="btn btn-flat  btn-danger" onclick="return confirm('Apakah anda yakin akan menghapus {{ $s->name }}?')">Hapus </button>
+                            <a href="{{ route('siswa.show', $s->no_identitas) }}" class="btn  bg-olive">Show</a>
+                            <a href="{{ route('siswa.edit', $s->id) }}" class="btn  bg-blue">Edit</a>
+                            <button type="submit" class="btn   btn-danger" onclick="return confirm('Apakah anda yakin akan menghapus {{ $s->name }}?')">Hapus </button>
                             {!! Form::close() !!}
                         </td>
                     </tr>

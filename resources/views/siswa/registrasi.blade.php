@@ -6,7 +6,7 @@
     </div>
     <!-- /.box-header -->
     <div class="box-body">
-        {!! Form::model($users, ['route' => ['registrasi.create', $users->id], 'method'=>'post'])!!}
+        {!! Form::model($users, ['route' => ['registrasi.store', $users->no_identitas, $tahunAjaran], 'method'=>'post'])!!}
         <table class="table table-bordered">
             <tr>
                 <th width="200px">No Registrasi</th>
@@ -22,8 +22,8 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <button type="submit" class="btn btn-primary btn-flat">Simpan</button>
-                    <a href="{{ route('siswa.show', $users->id) }}" title="" class="btn btn-success btn-flat">Cancel</a>
+                    <button type="submit" class="btn btn-primary ">Simpan</button>
+                    <a href="{{ url('siswa/'.$users->no_identitas.'/'.$tahunAjaran) }}" title="" class="btn btn-success ">Cancel</a>
                 </td>
             </tr>
         </table>

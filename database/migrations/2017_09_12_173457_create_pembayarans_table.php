@@ -18,10 +18,8 @@ class CreatePembayaransTable extends Migration
             $table->integer('registrasi_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->integer('jenis_pembayaran_id')->unsigned();
-            $table->string('semester');
+            $table->string('bulan');
             $table->integer('bayar');
-            $table->integer('tunggakan');
-            $table->string('keterangan');
             $table->foreign('jenis_pembayaran_id')->references('id')->on('jenis_pembayarans');
             $table->foreign('registrasi_id')->references('id')->on('registrasis');
             $table->foreign('user_id')->references('id')->on('users');

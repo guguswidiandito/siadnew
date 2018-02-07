@@ -19,17 +19,29 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('siswa', 'UserController');
     Route::resource('kelas', 'KelasController');
     Route::resource('jenis', 'JenisController');
-    Route::get('siswa/{siswa}/registrasi', [
+    Route::get('siswa/{siswa}/kelas', [
+      'as'   => 'siswa.kelas',
+      'uses' => 'UserController@tambahKelasPerSiswa',
+    ]);
+    Route::post('siswa/{siswa}/kelas', [
+      'as'   => 'siswa.kelas.store',
+      'uses' => 'UserController@storeKelasPerSiswa',
+    ]);
+    Route::get('siswa/{siswa}/{tahun_ajaran}', [
+      'as'   => 'siswa.tahun.ajaran',
+      'uses' => 'UserController@registrasiPerTahunAjaran',
+    ]);
+    Route::get('siswa/{siswa}/{tahun_ajaran}/registrasi', [
         'as'   => 'siswa.registrasi',
         'uses' => 'UserController@createRegistrasi',
     ]);
-    Route::post('siswa/{siswa}/registrasi', [
-        'as'   => 'registrasi.create',
+    Route::post('siswa/{siswa}/{tahun_ajaran}/registrasi', [
+        'as'   => 'registrasi.store',
         'uses' => 'UserController@newRegistrasi',
     ]);
     Route::delete('siswa/{user_id}/registrasi/{id}', [
         'as'   => 'registrasi.delete',
-        'uses' => 'registrasiController@delRegistrasi',
+        'uses' => 'RegistrasiController@delRegistrasi',
     ]);
     Route::get('siswa/{user_id}/registrasi/{id}/edit', [
         'as'   => 'registrasi.edit',
@@ -39,19 +51,19 @@ Route::group(['middleware' => ['auth']], function () {
         'as'   => 'registrasi.update',
         'uses' => 'RegistrasiController@updateRegistrasi',
     ]);
-    Route::get('siswa/{user_id}/registrasi/{id}/pembayaran', [
+    Route::get('siswa/{siswa}/{tahun_ajaran}/{registrasi}', [
         'as'   => 'siswa.pembayaran',
         'uses' => 'RegistrasiController@createPembayaran',
     ]);
-    Route::post('siswa/{user_id}/registrasi/{id}/pembayaran', [
-        'as'   => 'pembayaran.create',
+    Route::post('siswa/{siswa}/{tahun_ajaran}/{registrasi}', [
+        'as'   => 'pembayaran.store',
         'uses' => 'RegistrasiController@newPembayaran',
     ]);
-    Route::get('siswa/{user_id}/registrasi/{registrasi_id}/pembayaran/{id}/edit', [
+    Route::get('siswa/{siswa}/{registrasi}/{pembayaran}', [
         'as'   => 'pembayaran.edit',
         'uses' => 'RegistrasiController@editPembayaran',
     ]);
-    Route::patch('siswa/{user_id}/registrasi/{registrasi_id}/pembayaran/{id}', [
+    Route::patch('siswa/{siswa}/{registrasi}/{pembayaran}', [
         'as'   => 'pembayaran.update',
         'uses' => 'RegistrasiController@updatePembayaran',
     ]);

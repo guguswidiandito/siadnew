@@ -6,7 +6,7 @@
     </div>
     <!-- /.box-header -->
     <div class="box-body">
-        {!! Form::model($registrasi, ['route' => ['pembayaran.update', $registrasi->user_id, $registrasi->registrasi_id, $registrasi->id], 'method'=>'patch'])!!}
+        {!! Form::model($pembayaran, ['route' => ['pembayaran.update', $user->no_identitas, $registrasi->no_reg, $pembayaran->no_pem], 'method'=>'patch'])!!}
         <table class="table table-bordered">
            <tr>
                 <th width="200px">No Pembayaran</th>
@@ -31,7 +31,7 @@
             <tr>
                 <td colspan="2">
                     <button type="submit" class="btn btn-flat btn-danger">Update</button>
-                    <a href="{{ url('siswa/'.$registrasi->user_id.'/registrasi/'.$registrasi->registrasi_id.'/pembayaran') }}" title="" class="btn btn-flat btn-success">Cancel</a>
+                    <a href="{{ url('siswa/'.$user->no_identitas.'/'.$registrasi->no_reg) }}" title="" class="btn btn-flat btn-success">Cancel</a>
                 </td>
             </tr>
         </table>

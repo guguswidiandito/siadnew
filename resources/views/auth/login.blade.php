@@ -48,7 +48,7 @@
         <form role="form" method="POST" action="{{ url('/login') }}">
           {{ csrf_field() }}
           <div class="form-group has-feedback">
-            <input name="username" type="username" class="form-control" placeholder="Username" autofocus="autofocus">
+            <input name="email" type="email" class="form-control" placeholder="email" autofocus="autofocus">
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
           </div>
           <div class="form-group has-feedback">

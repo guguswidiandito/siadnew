@@ -12,7 +12,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'no_identitas', 'username', 'name', 'hak_akses', 'password', 'angkatan', 'kelas_id',
+        'no_identitas', 'email', 'name', 'hak_akses', 'password', 'angkatan',
     ];
 
     /**
@@ -26,7 +26,7 @@ class User extends Authenticatable
 
     public function kelas()
     {
-        return $this->belongsTo(Kelas::class);
+        return $this->belongsToMany(Kelas::class, 'kelas_user', 'user_id', 'kelas_id')->withPivot('tahun_ajaran');
     }
 
     public function registrasi()

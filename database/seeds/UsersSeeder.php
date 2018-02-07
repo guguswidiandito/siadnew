@@ -15,9 +15,8 @@ class UsersSeeder extends Seeder
         $users               = new user();
         $users->no_identitas = null;
         $users->name         = 'Admin';
-        $users->username     = 'admin';
+        $users->email        = 'admin@gmail.com';
         $users->hak_akses    = 'admin';
-        $users->kelas_id     = null;
         $users->angkatan     = null;
         $users->password     = bcrypt('rahasia');
         $users->save();
@@ -25,9 +24,8 @@ class UsersSeeder extends Seeder
         $users               = new user();
         $users->no_identitas = 13115051;
         $users->name         = 'Gugus Widiandito';
-        $users->username     = 'guguswidiandito';
+        $users->email     = 'guguswidianditogmail.com';
         $users->hak_akses    = 'siswa';
-        $users->kelas_id     = 1;
         $users->angkatan     = 2017;
         $users->password     = bcrypt('rahasia');
         $users->save();
@@ -35,9 +33,8 @@ class UsersSeeder extends Seeder
         $users               = new user();
         $users->no_identitas = null;
         $users->name         = 'Kepala Sekolah';
-        $users->username     = 'kepsek';
+        $users->email     = 'kepsek@gmail.com';
         $users->hak_akses    = 'kepsek';
-        $users->kelas_id     = null;
         $users->angkatan     = null;
         $users->password     = bcrypt('rahasia');
         $users->save();

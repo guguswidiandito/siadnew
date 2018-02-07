@@ -16,14 +16,19 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->integer('no_identitas')->unsigned()->nullable();
             $table->string('name');
-            $table->string('username')->unique();
+            $table->string('email')->unique();
             $table->string('hak_akses');
-            $table->integer('kelas_id')->unsigned()->nullable();
             $table->string('angkatan', 6)->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->foreign('kelas_id')->references('id')->on('kelas')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
+        });
+
+        Schema::create('kelas_user', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('kelas_id')->unsigned();
+            $table->integer('user_id')->unsigned();
+            $table->string('tahun_ajaran');
         });
     }
 
@@ -34,6 +39,7 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
+        Schema::drop('kelas_user');
         Schema::drop('users');
     }
 }
