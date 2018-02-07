@@ -13,6 +13,17 @@ class ReportController extends Controller
         return view('siswa.identitas');
     }
 
+    public function identitasFilter(Request $request)
+    {
+        $siswa   = User::where('hak_akses', 'siswa')
+          ->join('kelas_user', 'kelas_user.user_id', '=', 'users.id')
+          ->where('kelas_user.kelas_id', $request->kelas_id)
+          ->where('angkatan', 'LIKE', $request->angkatan)
+          ->orderBy('no_identitas')
+          ->get();
+        return view('siswa.laporan-filter', compact('siswa'));
+    }
+
     public function identitasPdf(Request $request)
     {
         $this->validate($request, [

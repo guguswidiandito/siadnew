@@ -21,7 +21,7 @@
     <!-- /.box-header -->
     <div class="box-body">
         <div class="table-responsive col-md-12">
-            <table class="table table-bordered table-striped table-condensed">
+            <table class="table table-bordered table-condensed">
                 <thead>
                     <tr>
                         <th class="text-center">No</th>

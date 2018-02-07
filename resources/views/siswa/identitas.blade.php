@@ -6,7 +6,7 @@
     </div>
     <!-- /.box-header -->
     <div class="box-body">
-        {!! Form::open(['url' => route('laporan.identitas'), 'method' => 'post', 'target'=>'_blank']) !!}
+        {!! Form::open(['url' => route('laporan.identitas.filter'), 'method' => 'get']) !!}
         <table class="table table-bordered">
             <tbody>
                 <tr>
@@ -23,7 +23,7 @@
                             <option selected="selected" disabled="disabled" hidden="hidden" value="">Pilih tahun</option>
                             <?php
                             for ($i=2010; $i<=date('Y'); $i++) {
-                            echo "<option value='".$i."'>".$i."</option>";
+                                echo "<option value='".$i."'>".$i."</option>";
                             }
                             ?>
                         </select>

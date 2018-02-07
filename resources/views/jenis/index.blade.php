@@ -7,7 +7,7 @@
     <!-- /.box-header -->
     <div class="box-body">
        <div class="table-responsive">
-            <table class="table table-bordered table-striped table-condensed">
+            <table class="table table-bordered table-condensed">
             <thead>
                 <tr>
                     <th>Jenis Pembayaran</th>

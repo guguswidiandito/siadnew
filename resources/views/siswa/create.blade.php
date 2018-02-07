@@ -27,15 +27,9 @@
                 </td>
             </tr>
             <tr>
-                <th width="200px">Kelas</th>
-                <td>
-                    {!! Form::select('kelas_id', $kelas, null, ['class'=>'form-control', 'placeholder'=>'Pilih kelas']) !!}
-                </td>
-            </tr>
-            <tr>
                 <th width="200px">Angkatan</th>
                 <td>
-                      {!! Form::selectRange('angkatan', 2016, date('Y'), ['class' => 'form-control', 'placeholder' => 'Pilih Tahun Angkatan']) !!}
+                      {!! Form::selectRange('angkatan', 2010, date('Y'), null, ['class'=>'form-control', 'placeholder'=>'Pilih tahun']) !!}
                   </div>
                   </td>
             </tr>

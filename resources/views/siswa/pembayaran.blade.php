@@ -33,7 +33,7 @@
                 <td class="text-center">{{ $p->no_pem }}</td>
                 <td>{{ Helper::namaBulan($p->bulan) }}</td>
                 <td class="text-right">Rp. {{ number_format($p->bayar) }}</td>
-                <td class="text-center">{{ $p->created_at }}</td>
+                <td class="text-center">{{ $p->created_at->format('d/m/Y') }}</td>
                 <td class="text-center">
                 {!! Form::open(['method' => 'POST']) !!}
                         {!! Form::submit("Hapus", ['class' => 'btn btn-danger btn-sm ']) !!}
@@ -91,10 +91,10 @@
               <td class="text-center">{{ $p->no_pem }}</td>
               <td>{{ Helper::namaBulan($p->bulan) }}</td>
               <td class="text-right">Rp. {{ number_format($p->bayar) }}</td>
-              <td class="text-center">{{ $p->created_at }}</td>
+              <td class="text-center">{{ $p->created_at->format('d/m/Y') }}</td>
               <td class="text-center">
-              {!! Form::open(['method' => 'POST']) !!}
-                      {!! Form::submit("Hapus", ['class' => 'btn btn-danger btn-sm ']) !!}
+              {!! Form::open(['route' => ['pembayaran.destroy', $user->no_identitas, $tahunAjaran, $registrasi->no_reg, $p->no_pem], 'method' => 'DELETE']) !!}
+                      {!! Form::submit("Hapus", ['class' => 'btn btn-danger btn-sm', 'onclick' => "return confirm('Apakah anda yakin akan menghapus $p->no_pem?')"]) !!}
               {!! Form::close() !!}
             </td>
             </tr>

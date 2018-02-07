@@ -16,7 +16,7 @@
       <table class="table table-bordered table-condensed">
         <thead>
           <tr>
-            <th colspan="8" class="text-center">Registration</th>
+            <th colspan="8" class="text-center">Registrati</th>
             <th rowspan="2" class="text-center" style="vertical-align: middle !important">Aksi</th>
           </tr>
           <tr>

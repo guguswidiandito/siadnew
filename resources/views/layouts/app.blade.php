@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="{{ asset('/dist/css/AdminLTE.min.css')}}">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
     folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="{{ asset('/dist/css/skins/skin-blue.css')}}">
+    <link rel="stylesheet" href="{{ asset('/dist/css/skins/skin-blue-light.css')}}">
     <!-- iCheck -->
     <link rel="stylesheet" href="{{ asset('/plugins/iCheck/flat/blue.css')}}">
     <script>
@@ -26,7 +26,7 @@
     ]); ?>
     </script>
   </head>
-  <body class="hold-transition skin-blue fixed">
+  <body class="hold-transition skin-blue-light fixed">
     <div class="wrapper">
       <header class="main-header">
         <a href="#" class="logo">

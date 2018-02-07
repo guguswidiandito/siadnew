@@ -14,7 +14,7 @@
 	<ul class="treeview-menu">
 		<li>
 			<a href="{{ route('kelas.index') }}"><i class="fa fa-circle-o"></i>Kelas</a>
-		</li>		
+		</li>
 		<li>
 			<a href="{{ route('siswa.index') }}"><i class="fa fa-circle-o"></i>Siswa</a>
 		</li>
@@ -32,10 +32,10 @@
 	</a>
 	<ul class="treeview-menu">
 		<li>
-			<a href="{{ url('siswa/laporan/identitas') }}"><i class="fa fa-circle-o"></i>Identitas</a>
+			<a href="{{ url('laporan/identitas') }}"><i class="fa fa-circle-o"></i>Identitas</a>
 		</li>
 		<li>
-			<a href="{{ url('siswa/laporan/pembayaran') }}"><i class="fa fa-circle-o"></i>Pembayaran</a>
+			<a href="{{ url('laporan/pembayaran') }}"><i class="fa fa-circle-o"></i>Pembayaran</a>
 		</li>
 		{{-- <li>
 			<a href="{{ route('export.registrasi') }}"><i class="fa fa-circle-o"></i>Registrasi</a>

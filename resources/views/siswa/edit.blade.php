@@ -21,15 +21,9 @@
                 </td>
             </tr>
             <tr>
-                <th>Username</th>
+                <th>Email</th>
                 <td>
-                    {!! Form::text('username', null, ['class'=>'form-control', 'placeholder' => 'Username' ]) !!}
-                </td>
-            </tr>
-            <tr>
-                <th width="200px">Kelas</th>
-                <td>
-                    {!! Form::select('kelas_id', $kelas, null, ['class'=>'form-control', 'placeholder'=>'Pilih kelas']) !!}
+                    {!! Form::email('email', null, ['class'=>'form-control', 'placeholder' => 'Username' ]) !!}
                 </td>
             </tr>
             <tr>

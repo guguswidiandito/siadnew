@@ -9,6 +9,7 @@ use App\User;
 use Auth;
 use Illuminate\Http\Request;
 use Session;
+use App\Helpers\Helper;
 
 class RegistrasiController extends Controller
 {
@@ -72,6 +73,11 @@ class RegistrasiController extends Controller
         }
     }
 
+    protected function existsBulan($request, $siswa, $registrasi)
+    {
+        return Pembayaran::where('bulan', $request->bulan)->where('user_id', $siswa)->where('registrasi_id', $registrasi)->count();
+    }
+
     public function newPembayaran(Request $request, $siswa, $tahunAjaran, $registrasi)
     {
         $this->validate($request, [
@@ -89,39 +95,40 @@ class RegistrasiController extends Controller
         $user_id   = $registrasi->user_id;
         $registrasi_id       = $registrasi->id;
         $jenis     = $registrasi->jenis_pembayaran_id;
-        $tunggakan = $registrasi->jenispembayaran->nominal - $bayar;
-        if ($tunggakan <= 0) {
-            $keterangan = 'Lunas';
-        } else {
-            $keterangan = 'Belum Lunas';
-        }
         $data                        = $request->all();
         $data['registrasi_id']       = $registrasi->id;
         $data['user_id']             = $user_id;
         $data['bulan']               = $request->bulan;
         $data['jenis_pembayaran_id'] = $jenis;
-        $data['tunggakan']           = $tunggakan;
-        $data['keterangan']          = $keterangan;
         $pembayaran = Pembayaran::where('registrasi_id', $registrasi->id)->get();
         $sum = 0;
         foreach ($pembayaran as $key => $value) {
             $sum += $value->bayar;
         }
         $min = $registrasi->jenispembayaran->nominal - $sum;
+        // return $this->existsBulan($request, $user->id, $registrasi->id);
         // return $bayar;
-        if ($bayar > $min) {
+        if ($this->existsBulan($request, $user->id, $registrasi->id) > 0) {
             Session::flash("flash_notification", [
-              "level"   => "danger",
-              "message" => "Jumlah nominal yang diinputkan kelebihan",
-          ]);
+            "level"   => "danger",
+            "message" => "Bulan ".Helper::namaBulan($request->bulan)." sudah dibayar",
+        ]);
             return redirect()->back();
         } else {
-            $pem = Pembayaran::create($data);
-            Session::flash("flash_notification", [
-              "level"   => "success",
-              "message" => "$pem->no_pem berhasil disimpan.",
-          ]);
-            return redirect()->back();
+            if ($bayar > $min) {
+                Session::flash("flash_notification", [
+                "level"   => "danger",
+                "message" => "Jumlah nominal yang diinputkan kelebihan",
+            ]);
+                return redirect()->back();
+            } else {
+                $pem = Pembayaran::create($data);
+                Session::flash("flash_notification", [
+                "level"   => "success",
+                "message" => "$pem->no_pem berhasil disimpan.",
+            ]);
+                return redirect()->back();
+            }
         }
     }
 
@@ -141,24 +148,14 @@ class RegistrasiController extends Controller
         }
     }
 
-    public function updatePembayaran(Request $request, $siswa, $registrasi, $pembayaran)
+    public function deletePembayaran($siswa, $tahunAjaran, $registrasi, $pembayaran)
     {
-        $this->validate($request, [
-            'bayar' => 'required|integer',
-        ]);
-        $bayar                 = $request->get('bayar');
-        $pembayaran            = Pembayaran::where('no_pem', $pembayaran)->first();
-        $pembayaran->tunggakan = $pembayaran->jenispembayaran->nominal - $bayar;
-        if ($pembayaran->tunggakan == 0) {
-            $pembayaran->keterangan = 'Lunas';
-        } else {
-            $pembayaran->keterangan = 'Belum Lunas';
-        }
-        $pembayaran->update($request->all());
+        $pembayaran = Pembayaran::where('no_pem', $pembayaran)->first();
+        $pembayaran->delete();
         Session::flash("flash_notification", [
-            "level"   => "success",
-            "message" => "$pembayaran->no_pem berhasil diupdate.",
+            "level"   => "danger",
+            "message" => "No $pembayaran->no_pem pada bulan ".Helper::namaBulan($pembayaran->bulan)." berhasil dihapus!",
         ]);
-        return redirect(url('siswa/'.$siswa.'/'.$registrasi));
+        return redirect()->back();
     }
 }

@@ -59,25 +59,26 @@ Route::group(['middleware' => ['auth']], function () {
         'as'   => 'pembayaran.store',
         'uses' => 'RegistrasiController@newPembayaran',
     ]);
-    Route::get('siswa/{siswa}/{registrasi}/{pembayaran}', [
-        'as'   => 'pembayaran.edit',
-        'uses' => 'RegistrasiController@editPembayaran',
+    Route::delete('siswa/{siswa}/{tahun_ajaran}/{registrasi}/{pembayaran}', [
+        'as'   => 'pembayaran.destroy',
+        'uses' => 'RegistrasiController@deletePembayaran',
     ]);
-    Route::patch('siswa/{siswa}/{registrasi}/{pembayaran}', [
-        'as'   => 'pembayaran.update',
-        'uses' => 'RegistrasiController@updatePembayaran',
-    ]);
-    Route::get('siswa/laporan/identitas', 'ReportController@identitas');
-    Route::post('siswa/laporan/identitas/pdf', [
-        'as'   => 'laporan.identitas',
-        'uses' => 'ReportController@identitasPdf',
-    ]);
-
-    Route::get('siswa/laporan/pembayaran', 'ReportController@pembayaran');
-    Route::post('siswa/laporan/pembayaran/pdf', [
-        'as'   => 'laporan.pembayaran',
-        'uses' => 'ReportController@pembayaranPdf',
-    ]);
+    Route::group(['prefix' => 'laporan'], function () {
+        Route::get('identitas', 'ReportController@identitas');
+        Route::get('identitas/filter', [
+          'as'   => 'laporan.identitas.filter',
+          'uses' => 'ReportController@identitasFilter',
+      ]);
+        Route::post('identitas/pdf', [
+          'as'   => 'laporan.identitas',
+          'uses' => 'ReportController@identitasPdf',
+      ]);
+        Route::get('pembayaran', 'ReportController@pembayaran');
+        Route::post('pembayaran/pdf', [
+          'as'   => 'laporan.pembayaran',
+          'uses' => 'ReportController@pembayaranPdf',
+      ]);
+    });
     Route::get('setelan/password', 'PasswordController@editPassword');
     Route::post('setelan/password', 'PasswordController@updatePassword');
 });
