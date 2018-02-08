@@ -2,25 +2,26 @@
 @section('content')
 <div class="box box-primary">
     <div class="box-header with-border">
-        <div class="col-md-10 text-left">
-            {!! Form::open(['url' => '/siswa', 'method'=>'get', 'class'=>'form-inline']) !!}
-            {!! Form::selectRange('angkatan', 2010, date('Y'), null, ['class'=>'form-control', 'placeholder'=>'Pilih tahun']) !!}
-            {!! Form::submit('Filter', ['class'=>'btn  bg-navy']) !!}
-            <div class="input-group {!! $errors->has('q') ? 'has-error' : '' !!}">
-                {!! Form::text('q', isset($q) ? $q : null, ['class'=>'form-control', 'placeholder' => 'NIS']) !!}
-                <span class="input-group-btn">
-                    <button class="btn  bg-maroon" type="submit">Cari</button>
-                </span>
-            </div>
-            {!! Form::close() !!}
-        </div>
-        <div class="col-md-2 text-right">
+        <h1 class="box-title">Daftar Siswa</h1>
+        <div class="pull-right">
             <a href="{{ url('siswa/create') }}" class="btn  bg-purple">Tambah Siswa</a>
         </div>
     </div>
     <!-- /.box-header -->
     <div class="box-body">
-        <div class="table-responsive col-md-12">
+      <div class="text-right">
+          {!! Form::open(['url' => '/siswa', 'method'=>'GET', 'class'=>'form-inline']) !!}
+          {!! Form::selectRange('angkatan', 2010, date('Y'), null, ['class'=>'form-control', 'placeholder'=>'Pilih tahun']) !!}
+          <div class="input-group {!! $errors->has('q') ? 'has-error' : '' !!}">
+              {!! Form::text('q', isset($q) ? $q : null, ['class'=>'form-control', 'placeholder' => 'NIS']) !!}
+              <span class="input-group-btn">
+                  <button class="btn  bg-maroon" type="submit">Cari</button>
+              </span>
+          </div>
+          {!! Form::close() !!}
+      </div>
+      <br>
+        <div class="table-responsive">
             <table class="table table-bordered table-condensed">
                 <thead>
                     <tr>
