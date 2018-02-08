@@ -12,4 +12,9 @@ class JenisPembayaran extends Model
     {
         return $this->hasMany(Registrasi::class);
     }
+
+    public function pembayaran()
+    {
+        return $this->hasMany(Pembayaran::class);
+    }
 }

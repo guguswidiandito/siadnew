@@ -27,15 +27,15 @@ Route::group(['middleware' => ['auth']], function () {
       'as'   => 'siswa.kelas.store',
       'uses' => 'UserController@storeKelasPerSiswa',
     ]);
-    Route::get('siswa/{siswa}/{tahun_ajaran}', [
+    Route::get('siswa/{siswa}/{kelas}/{tahun_ajaran}', [
       'as'   => 'siswa.tahun.ajaran',
       'uses' => 'UserController@registrasiPerTahunAjaran',
     ]);
-    Route::get('siswa/{siswa}/{tahun_ajaran}/registrasi', [
+    Route::get('siswa/{siswa}/{kelas}/{tahun_ajaran}/registrasi', [
         'as'   => 'siswa.registrasi',
         'uses' => 'UserController@createRegistrasi',
     ]);
-    Route::post('siswa/{siswa}/{tahun_ajaran}/registrasi', [
+    Route::post('siswa/{siswa}/{kelas}/{tahun_ajaran}/registrasi', [
         'as'   => 'registrasi.store',
         'uses' => 'UserController@newRegistrasi',
     ]);
@@ -51,21 +51,21 @@ Route::group(['middleware' => ['auth']], function () {
         'as'   => 'registrasi.update',
         'uses' => 'RegistrasiController@updateRegistrasi',
     ]);
-    Route::get('siswa/{siswa}/{tahun_ajaran}/{registrasi}', [
+    Route::get('siswa/{siswa}/{kelas}/{tahun_ajaran}/{registrasi}', [
         'as'   => 'siswa.pembayaran',
         'uses' => 'RegistrasiController@createPembayaran',
     ]);
-    Route::post('siswa/{siswa}/{tahun_ajaran}/{registrasi}', [
+    Route::post('siswa/{siswa}/{kelas}/{tahun_ajaran}/{registrasi}', [
         'as'   => 'pembayaran.store',
         'uses' => 'RegistrasiController@newPembayaran',
     ]);
-    Route::delete('siswa/{siswa}/{tahun_ajaran}/{registrasi}/{pembayaran}', [
+    Route::delete('siswa/{siswa}/{kelas}/{tahun_ajaran}/{registrasi}/{pembayaran}', [
         'as'   => 'pembayaran.destroy',
         'uses' => 'RegistrasiController@deletePembayaran',
     ]);
     Route::group(['prefix' => 'laporan'], function () {
         Route::get('identitas', 'ReportController@identitas');
-        Route::get('identitas/filter', [
+        Route::post('identitas', [
           'as'   => 'laporan.identitas.filter',
           'uses' => 'ReportController@identitasFilter',
       ]);
@@ -74,6 +74,10 @@ Route::group(['middleware' => ['auth']], function () {
           'uses' => 'ReportController@identitasPdf',
       ]);
         Route::get('pembayaran', 'ReportController@pembayaran');
+        Route::post('pembayaran', [
+          'as'   => 'laporan.pembayaran.filter',
+          'uses' => 'ReportController@pembayaranFilter',
+      ]);
         Route::post('pembayaran/pdf', [
           'as'   => 'laporan.pembayaran',
           'uses' => 'ReportController@pembayaranPdf',

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Registrasi extends Model
 {
-    protected $fillable = ['no_reg', 'user_id', 'jenis_pembayaran_id', 'tahun_ajaran'];
+    protected $fillable = ['no_reg', 'user_id', 'kelas_id', 'jenis_pembayaran_id', 'tahun_ajaran'];
 
     public function users()
     {
@@ -20,7 +20,11 @@ class Registrasi extends Model
 
     public function pembayaran()
     {
-        return $this->hasOne(Pembayaran::class);
+        return $this->hasMany(Pembayaran::class);
     }
 
+    public function kelas()
+    {
+        return $this->belongsTo(Kelas::class);
+    }
 }

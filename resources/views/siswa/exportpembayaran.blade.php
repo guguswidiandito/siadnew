@@ -6,31 +6,42 @@
     </div>
     <!-- /.box-header -->
     <div class="box-body">
-        {!! Form::open(['url' => route('laporan.pembayaran'), 'method' => 'post', 'target'=>'_blank']) !!}
+        {!! Form::open(['url' => route('laporan.pembayaran.filter'), 'method' => 'POST']) !!}
         <table class="table table-bordered">
             <tbody>
                 <tr>
                     <th width="200px">Kelas</th>
                     <td>
-                        {!! Form::select('kelas', []+App\Kelas::pluck('nama_kelas','id')->all(), null, ['class'=>'form-control', 'placeholder' => 'Pilih kelas']) !!}
+                        {!! Form::select('kelas', []+App\Kelas::pluck('nama_kelas','nama_kelas')->all(), null, ['class'=>'form-control', 'placeholder' => 'Pilih kelas']) !!}
                     </td>
                 </tr>
                 <tr>
-                    <th width="200px">Tahun</th>
+                    <th width="200px">Jenis Pembayaran</th>
                     <td>
-                        <select name="tahun" class="form-control" required>
-                            <option selected="selected" disabled="disabled" hidden="hidden" value="">Pilih tahun</option>
-                            <?php
-                            for ($i=2010; $i<=date('Y'); $i++) {
-                            echo "<option value='".$i."'>".$i."</option>";
-                            }
-                            ?>
-                        </select>
+                        {!! Form::select('jenis_pembayaran_id', []+App\JenisPembayaran::pluck('jenis','id')->all(), null, ['class'=>'form-control', 'placeholder' => 'Pilih jenis pembayaran']) !!}
+                    </td>
+                </tr>
+                <tr>
+                    <th width="200px">Tahun Ajaran</th>
+                    <td>
+                      @php
+                      foreach (range(2010,date('Y')) as $i ) {
+                      $j=$i+1;
+                      $tahun_ajaran[$i.'-'.$j] = $i.' / '.$j;
+                      }
+                      @endphp
+                      {!! Form::select('tahun_ajaran', $tahun_ajaran, null, ['class' => 'form-control', 'placeholder' => 'Pilih tahun ajaran']) !!}
+                    </td>
+                </tr>
+                <tr>
+                    <th width="200px">Tahun Angkatan</th>
+                    <td>
+                      {!! Form::selectRange('angkatan', 2010, date('Y'), null, ['class' => 'form-control', 'placeholder' => 'Pilih tahun angkatan']) !!}
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                        {!! Form::submit('Download', ['class'=>'btn btn-primary']) !!}
+                        {!! Form::submit('lihat', ['class'=>'btn btn-primary']) !!}
                     </td>
                 </tr>
             </tbody>

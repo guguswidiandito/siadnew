@@ -31,7 +31,7 @@
 							</tr>
 						@forelse ($users->kelas as $key => $kelas)
 							<tr>
-								<td class="text-center">{{ ++$key }}</td><td>{{ $kelas->nama_kelas }}</td><td class="text-center">{{ isset($kelas->jurusan) ? $kelas->jurusan : "-" }}</td><td class="text-center">{{ $kelas->pivot->tahun_ajaran }}</td><td class="text-center"><a href="{{ url('siswa/'.$users->no_identitas.'/'.$kelas->pivot->tahun_ajaran) }}" class="btn btn-success ">Registrasi</a></td>
+								<td class="text-center">{{ ++$key }}</td><td>{{ $kelas->nama_kelas }}</td><td class="text-center">{{ isset($kelas->jurusan) ? $kelas->jurusan : "-" }}</td><td class="text-center">{{ $kelas->pivot->tahun_ajaran }}</td><td class="text-center"><a href="{{ url('siswa/'.$users->no_identitas.'/'.$kelas->nama_kelas.'/'.$kelas->pivot->tahun_ajaran) }}" class="btn btn-success ">Registrasi</a></td>
 							</tr>
 						@empty
 							<tr>

@@ -4,8 +4,8 @@ namespace App\Helpers;
 
 class Helper
 {
-      public static function namaBulan($bulan)
-      {
+    public static function namaBulan($bulan)
+    {
         switch ($bulan) {
           case '1':
             return 'Januari';
@@ -29,10 +29,10 @@ class Helper
             return 'Juli';
             break;
           case '8':
-            return 'agustus';
+            return 'Agustus';
             break;
           case '9':
-            return 'september';
+            return 'September';
             break;
           case '10':
             return 'Oktober';
@@ -47,5 +47,5 @@ class Helper
             return $bulan;
             break;
         }
-      }
+    }
 }

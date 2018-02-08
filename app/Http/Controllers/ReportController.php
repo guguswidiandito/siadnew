@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use PDF;
+use App\Kelas;
 
 class ReportController extends Controller
 {
@@ -15,6 +16,12 @@ class ReportController extends Controller
 
     public function identitasFilter(Request $request)
     {
+        $this->validate($request, [
+          'kelas_id' => 'required',
+          'angkatan' => 'required'
+      ], [
+          'kelas_id.required' => 'Anda masih belum memilih kelas yang akan diproses.',
+      ]);
         $siswa   = User::where('hak_akses', 'siswa')
           ->join('kelas_user', 'kelas_user.user_id', '=', 'users.id')
           ->where('kelas_user.kelas_id', $request->kelas_id)
@@ -45,17 +52,42 @@ class ReportController extends Controller
         return view('siswa.exportpembayaran');
     }
 
+    public function pembayaranFilter(Request $request)
+    {
+        $this->validate($request, [
+          'kelas' => 'required',
+          'jenis_pembayaran_id' => 'required',
+          'tahun_ajaran' => 'required',
+          'angkatan' => 'required'
+      ]);
+        $registrasi = User::where('hak_akses', 'siswa')
+        ->whereHas('kelas', function ($q) use ($request) {
+            $q->where('tahun_ajaran', $request->tahun_ajaran)
+            ->where('nama_kelas', $request->kelas)
+            ->whereHas('registrasi', function ($q) use ($request) {
+                $q->whereHas('jenispembayaran', function ($q) use ($request) {
+                    $q->where('id', $request->jenis_pembayaran_id);
+                })->with('pembayaran');
+            });
+        })->where('angkatan', $request->angkatan)->get();
+
+        return view('siswa.pembayaran-filter', compact('registrasi'));
+    }
+
     public function pembayaranPdf(Request $request)
     {
         $registrasi = \DB::table('users')
-            ->join('kelas', 'users.kelas_id', '=', 'kelas.id')
             ->join('registrasis', 'registrasis.user_id', '=', 'users.id')
             ->join('jenis_pembayarans', 'registrasis.jenis_pembayaran_id', '=', 'jenis_pembayarans.id')
             ->join('pembayarans', 'pembayarans.registrasi_id', '=', 'registrasis.id')
-            ->where('kelas_id', 'like', '%' . $request->get('kelas') . '%')
-            ->where('angkatan', 'LIKE', '%' . $request->get('tahun') . '%')
+            ->join('kelas_user', 'kelas_user.user_id', '=', 'users.id')
+            ->join('kelas', 'kelas.id', '=', 'kelas_user.kelas_id')
+            ->where('jenis_pembayarans.jenis', $request->jenis_pembayaran)
+            ->where('kelas.nama_kelas', $request->kelas)
+            ->where('registrasis.tahun_ajaran', $request->tahun_ajaran)
             ->orderBy('no_reg')
             ->get();
+        return $registrasi;
         // return $registrasi;
         $pdf = PDF::loadview('siswa.laporanPembayaran', compact('registrasi'))->setPaper('a4', 'landscape');
         return $pdf->stream('Laporan Pembayaran.pdf');

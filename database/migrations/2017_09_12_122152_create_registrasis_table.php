@@ -16,6 +16,7 @@ class CreateRegistrasisTable extends Migration
             $table->increments('id');
             $table->string('no_reg');
             $table->integer('user_id')->unsigned();
+            $table->integer('kelas_id')->unsigned();
             $table->integer('jenis_pembayaran_id')->unsigned();
             $table->string('tahun_ajaran');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');

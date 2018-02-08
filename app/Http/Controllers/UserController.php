@@ -135,36 +135,6 @@ class UserController extends Controller
         }
     }
 
-    public function registrasiPerTahunAjaran($siswa, $tahunAjaran)
-    {
-        if (Auth::check() && Auth::user()->hak_akses == 'admin') {
-            $users      = User::where('no_identitas', $siswa)->firstOrFail();
-            $registrasi = Registrasi::where('user_id', $users->id)->get();
-            return view('siswa.show-registrasi', compact('users', 'registrasi', 'tahunAjaran'));
-        } else {
-            Session::flash("flash_notification", [
-              "level"   => "danger",
-              "message" => "Tidak dapat mengakses",
-          ]);
-            return redirect()->back();
-        }
-    }
-
-    public function createRegistrasi($id, $tahunAjaran)
-    {
-        if (Auth::check() && Auth::user()->hak_akses == "admin") {
-            $users = User::where('no_identitas', $id)->firstOrFail();
-            $jenis = JenisPembayaran::pluck('jenis', 'id');
-            return view('siswa.registrasi')->with(compact('users', 'jenis', 'tahunAjaran'));
-        } else {
-            Session::flash("flash_notification", [
-                "level"   => "danger",
-                "message" => "Bukan hak akses anda",
-            ]);
-            return redirect()->back();
-        }
-    }
-
     public function tambahKelasPerSiswa($id)
     {
         if (Auth::check() && Auth::user()->hak_akses == "admin") {
@@ -225,7 +195,39 @@ class UserController extends Controller
         return Registrasi::where('jenis_pembayaran_id', $request->jenis_pembayaran_id)->where('user_id', $id)->where('tahun_ajaran', $tahunAjaran)->count();
     }
 
-    public function newRegistrasi(Request $request, $id, $tahunAjaran)
+    public function registrasiPerTahunAjaran($siswa, $kelas, $tahunAjaran)
+    {
+        if (Auth::check() && Auth::user()->hak_akses == 'admin') {
+            $users      = User::where('no_identitas', $siswa)->firstOrFail();
+            $kelas = Kelas::where('nama_kelas', $kelas)->firstOrFail();
+            $registrasi = Registrasi::where('user_id', $users->id)->get();
+            return view('siswa.show-registrasi', compact('users', 'registrasi', 'tahunAjaran', 'kelas'));
+        } else {
+            Session::flash("flash_notification", [
+              "level"   => "danger",
+              "message" => "Tidak dapat mengakses",
+          ]);
+            return redirect()->back();
+        }
+    }
+
+    public function createRegistrasi($id, $kelas, $tahunAjaran)
+    {
+        if (Auth::check() && Auth::user()->hak_akses == "admin") {
+            $users = User::where('no_identitas', $id)->firstOrFail();
+            $kelas = Kelas::where('nama_kelas', $kelas)->firstOrFail();
+            $jenis = JenisPembayaran::pluck('jenis', 'id');
+            return view('siswa.registrasi')->with(compact('users', 'jenis', 'tahunAjaran', 'kelas'));
+        } else {
+            Session::flash("flash_notification", [
+                "level"   => "danger",
+                "message" => "Bukan hak akses anda",
+            ]);
+            return redirect()->back();
+        }
+    }
+
+    public function newRegistrasi(Request $request, $id, $kelas, $tahunAjaran)
     {
         $this->validate($request, [
             'no_reg'              => 'required|unique:registrasis',
@@ -236,7 +238,9 @@ class UserController extends Controller
             'jenis_pembayaran_id.required' => 'field jenis pembayaran harus diisi',
         ]);
         $users           = User::where('no_identitas', $id)->firstOrFail();
+        $kelas = Kelas::where('nama_kelas', $kelas)->firstOrFail();
         $data            = $request->all();
+        $data['kelas_id'] = $kelas->id;
         $data['user_id'] = $users->id;
         $data['tahun_ajaran'] = $tahunAjaran;
         if ($this->existsJenisPembayaran($request, $users->id, $tahunAjaran) < 1) {
@@ -245,7 +249,7 @@ class UserController extends Controller
               "level"   => "success",
               "message" => "$registrasi->no_reg berhasil disimpan.",
           ]);
-            return redirect(url('siswa/'.$id.'/'.$tahunAjaran));
+            return redirect(url('siswa/'.$id.'/'.$kelas->nama_kelas.'/'.$tahunAjaran));
         } else {
             Session::flash("flash_notification", [
               "level"   => "danger",

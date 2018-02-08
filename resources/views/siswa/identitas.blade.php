@@ -6,7 +6,7 @@
     </div>
     <!-- /.box-header -->
     <div class="box-body">
-        {!! Form::open(['url' => route('laporan.identitas.filter'), 'method' => 'get']) !!}
+        {!! Form::open(['url' => route('laporan.identitas.filter'), 'method' => 'POST']) !!}
         <table class="table table-bordered">
             <tbody>
                 <tr>
@@ -19,19 +19,12 @@
                 <tr>
                     <th width="200px">Tahun Angkatan</th>
                     <td>
-                        <select name="angkatan" class="form-control">
-                            <option selected="selected" disabled="disabled" hidden="hidden" value="">Pilih tahun</option>
-                            <?php
-                            for ($i=2010; $i<=date('Y'); $i++) {
-                                echo "<option value='".$i."'>".$i."</option>";
-                            }
-                            ?>
-                        </select>
+                            {!! Form::selectRange('angkatan', 2010, date('Y'), null, ['class'=>'form-control', 'placeholder'=>'Pilih tahun']) !!}
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                        {!! Form::submit('Download', ['class'=>'btn btn-primary']) !!}
+                        {!! Form::submit('Lihat', ['class'=>'btn btn-primary']) !!}
                     </td>
                 </tr>
             </tbody>

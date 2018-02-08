@@ -5,7 +5,7 @@
         <h1 class="box-title">Pembayaran dengan No Reg:
         <strong>{{ $registrasi->no_reg }}</strong></h1>
         <div class="pull-right">
-          <a href="{{ url('siswa/'.$user->no_identitas.'/'.$tahunAjaran) }}" class="btn bg-navy ">Kembali</a>
+          <a href="{{ url('siswa/'.$user->no_identitas.'/'.$kelas->nama_kelas.'/'.$tahunAjaran) }}" class="btn bg-navy ">Kembali</a>
         </div>
     </div>
     <!-- /.box-header -->
@@ -35,9 +35,9 @@
                 <td class="text-right">Rp. {{ number_format($p->bayar) }}</td>
                 <td class="text-center">{{ $p->created_at->format('d/m/Y') }}</td>
                 <td class="text-center">
-                {!! Form::open(['method' => 'POST']) !!}
-                        {!! Form::submit("Hapus", ['class' => 'btn btn-danger btn-sm ']) !!}
-                {!! Form::close() !!}
+                  {!! Form::open(['route' => ['pembayaran.destroy', $user->no_identitas, $kelas->nama_kelas, $tahunAjaran, $registrasi->no_reg, $p->no_pem], 'method' => 'DELETE']) !!}
+                          {!! Form::submit("Hapus", ['class' => 'btn btn-danger btn-sm', 'onclick' => "return confirm('Apakah anda yakin akan menghapus $p->no_pem?')"]) !!}
+                  {!! Form::close() !!}
               </td>
               </tr>
             @empty
@@ -48,7 +48,7 @@
           </tbody>
         </table>
       @else
-      {!! Form::open(['method' => 'POST', 'route' => ['pembayaran.store', $user->no_identitas, $tahunAjaran, $registrasi->no_reg]]) !!}
+      {!! Form::open(['method' => 'POST', 'route' => ['pembayaran.store', $user->no_identitas, $kelas->nama_kelas, $tahunAjaran, $registrasi->no_reg]]) !!}
       <table class="table table-bordered table-condensed">
         <tr>
           <th>No Pembayaran</th>
@@ -93,7 +93,7 @@
               <td class="text-right">Rp. {{ number_format($p->bayar) }}</td>
               <td class="text-center">{{ $p->created_at->format('d/m/Y') }}</td>
               <td class="text-center">
-              {!! Form::open(['route' => ['pembayaran.destroy', $user->no_identitas, $tahunAjaran, $registrasi->no_reg, $p->no_pem], 'method' => 'DELETE']) !!}
+              {!! Form::open(['route' => ['pembayaran.destroy', $user->no_identitas, $kelas->nama_kelas, $tahunAjaran, $registrasi->no_reg, $p->no_pem], 'method' => 'DELETE']) !!}
                       {!! Form::submit("Hapus", ['class' => 'btn btn-danger btn-sm', 'onclick' => "return confirm('Apakah anda yakin akan menghapus $p->no_pem?')"]) !!}
               {!! Form::close() !!}
             </td>

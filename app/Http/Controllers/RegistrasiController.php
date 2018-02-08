@@ -10,6 +10,7 @@ use Auth;
 use Illuminate\Http\Request;
 use Session;
 use App\Helpers\Helper;
+use App\Kelas;
 
 class RegistrasiController extends Controller
 {
@@ -58,12 +59,13 @@ class RegistrasiController extends Controller
         return redirect()->route('siswa.show', $registrasi->user_id);
     }
 
-    public function createPembayaran($no_identitas, $tahunAjaran, $id)
+    public function createPembayaran($no_identitas, $kelas, $tahunAjaran, $id)
     {
         if (Auth::check() && Auth::user()->hak_akses == "admin") {
             $user = User::where('no_identitas', $no_identitas)->firstOrFail();
             $registrasi = Registrasi::where('no_reg', $id)->where('user_id', $user->id)->firstOrFail();
-            return view('siswa.pembayaran')->with(compact('user', 'registrasi', 'tahunAjaran'));
+            $kelas = Kelas::where('nama_kelas', $kelas)->firstOrFail();
+            return view('siswa.pembayaran')->with(compact('user', 'registrasi', 'tahunAjaran', 'kelas'));
         } else {
             Session::flash("flash_notification", [
                 "level"   => "danger",
@@ -78,7 +80,7 @@ class RegistrasiController extends Controller
         return Pembayaran::where('bulan', $request->bulan)->where('user_id', $siswa)->where('registrasi_id', $registrasi)->count();
     }
 
-    public function newPembayaran(Request $request, $siswa, $tahunAjaran, $registrasi)
+    public function newPembayaran(Request $request, $siswa, $kelas, $tahunAjaran, $registrasi)
     {
         $this->validate($request, [
             'no_pem' => 'required|unique:pembayarans',
@@ -148,12 +150,12 @@ class RegistrasiController extends Controller
         }
     }
 
-    public function deletePembayaran($siswa, $tahunAjaran, $registrasi, $pembayaran)
+    public function deletePembayaran($siswa, $kelas, $tahunAjaran, $registrasi, $pembayaran)
     {
         $pembayaran = Pembayaran::where('no_pem', $pembayaran)->first();
         $pembayaran->delete();
         Session::flash("flash_notification", [
-            "level"   => "danger",
+            "level"   => "success",
             "message" => "No $pembayaran->no_pem pada bulan ".Helper::namaBulan($pembayaran->bulan)." berhasil dihapus!",
         ]);
         return redirect()->back();

@@ -11,12 +11,12 @@
 	</div>
 	<!-- /.box-header -->
 	<div class="box-body">
-    <h3><a href="{{ url('siswa/'.$users->no_identitas.'/'.$tahunAjaran.'/registrasi') }}" class="btn   btn-primary ">Registrasi Baru</a></h3>
+    <h3><a href="{{ url('siswa/'.$users->no_identitas.'/'.$kelas->nama_kelas.'/'.$tahunAjaran.'/registrasi') }}" class="btn   btn-primary ">Registrasi Baru</a></h3>
     <div class="table-responsive">
       <table class="table table-bordered table-condensed">
         <thead>
           <tr>
-            <th colspan="8" class="text-center">Registrati</th>
+            <th colspan="8" class="text-center">Registrasi</th>
             <th rowspan="2" class="text-center" style="vertical-align: middle !important">Aksi</th>
           </tr>
           <tr>
@@ -85,7 +85,7 @@
             </td>
             <td class="text-center">
               {!! Form::model($p, ['route'=>['registrasi.delete', $users->no_identitas, $p->id], 'method' => 'delete', 'class'=>'form-inline']) !!}
-              <a href="{{ url('siswa/'.$users->no_identitas.'/'.$tahunAjaran.'/'.$p->no_reg) }}" title="" class="btn btn-info">Lihat Pembayaran</a>
+              <a href="{{ url('siswa/'.$users->no_identitas.'/'.$kelas->nama_kelas.'/'.$tahunAjaran.'/'.$p->no_reg) }}" title="" class="btn btn-info">Lihat Pembayaran</a>
               {{-- <button type="submit" class="btn   btn-danger" onclick="return confirm('Apakah anda yakin akan menghapus {{$p->no_reg}}?')">Hapus</button> --}}
               {!! Form::close() !!}
             </td>

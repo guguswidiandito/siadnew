@@ -12,4 +12,9 @@ class Kelas extends Model
     {
         return $this->belongsToMany(User::class, 'kelas_user', 'kelas_id', 'user_id')->withPivot('tahun_ajaran');
     }
+
+    public function registrasi()
+    {
+        return $this->hasMany(Registrasi::class);
+    }
 }
